@@ -7,41 +7,55 @@ class Test extends Component {
   state = { 
     test: [
       {
+        question: 'Какого цвета небо?',
+        rightAnswerId: 2,
         answers: [
           {
-            text: 'Вопрос 1'
+            text: 'Черный',
+            id: 1
           },
           {
-            text: 'Вопрос 2'
+            text: 'Синий',
+            id: 2
           },
           {
-            text: 'Вопрос 3'
+            text: 'Красный',
+            id: 3
           },
           {
-            text: 'Вопрос 4'
+            text: 'Зеленый',
+            id: 4
           } 
         ]
       }
     ]
   }
 
-    render() {
-
-      // console.log(this.state.test[0])
-
-      return (
-       <div
-        className={
-            classes.Test
-        } >
-        <div className={classes.TestWrapper}>
-        <h1>Ответьте на все вопросы</h1>
-          <ActiveTest test={this.state.test[0]}/>
-        </div>
-       </div>
-      )
-    }
+  onAnswerClick = (answerId) => {
+    console.log('Answer Id: ' + answerId)
   }
+
+
+
+
+  render() {
+    // console.log(this.state.test[0])
+    return (
+     <div
+      className={
+          classes.Test
+      } >
+      <div className={classes.TestWrapper}>
+      <h1>Ответьте на все вопросы</h1>
+        <ActiveTest 
+          test={this.state.test[0]}
+          onAnswerClick = {this.onAnswerClick}
+        />
+      </div>
+     </div>
+    )
+  }
+}
   
   export default Test;
   
