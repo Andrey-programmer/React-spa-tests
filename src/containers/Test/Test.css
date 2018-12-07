@@ -1,0 +1,17 @@
+.Test {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    flex-grow: 1;
+    align-items: stretch;
+    background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);
+}
+
+.Test h1 {
+    color: #fff;
+    margin-left: 10px;
+}
+
+.TestWrapper {
+    width: 600px;
+}
