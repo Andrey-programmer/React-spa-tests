@@ -11,14 +11,14 @@ const ActiveTest = props => {
         >
             <p className={classes.Question}>
                 <span>
-                    <strong>2. </strong>
+                    <strong>{props.answerNumber}. </strong>
                     {props.test.question}
                 </span>
-                <small>4 из 12</small>
+                <small>{props.answerNumber} из {props.testLength}</small>
             </p>
         <AnswersList 
                 answers={props.test.answers}
-                onAnswerClick={props.onAnswerClick} 
+                onAnswerClick={props.onAnswerClick}
             />
         </div>
     )

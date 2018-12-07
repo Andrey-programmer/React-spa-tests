@@ -5,8 +5,10 @@ import ActiveTest from '../../compionents/ActiveTest/ActiveTest'
 class Test extends Component {
 
   state = { 
+    activeQuestion: 0,
     test: [
       {
+        id: 1,
         question: 'Какого цвета небо?',
         rightAnswerId: 2,
         answers: [
@@ -27,12 +29,38 @@ class Test extends Component {
             id: 4
           } 
         ]
+      },
+      {
+        id: 2,
+        question: 'В Каком году основали Санкт-Петербург?',
+        rightAnswerId: 3,
+        answers: [
+          {
+            text: '1700',
+            id: 1
+          },
+          {
+            text: '1705',
+            id: 2
+          },
+          {
+            text: '1703',
+            id: 3
+          },
+          {
+            text: '1803',
+            id: 4
+          } 
+        ]
       }
     ]
   }
 
   onAnswerClick = (answerId) => {
     console.log('Answer Id: ' + answerId)
+    this.setState({
+      activeQuestion: this.state.activeQuestion + 1
+    })
   }
 
 
@@ -48,8 +76,10 @@ class Test extends Component {
       <div className={classes.TestWrapper}>
       <h1>Ответьте на все вопросы</h1>
         <ActiveTest 
-          test={this.state.test[0]}
+          test={this.state.test[this.state.activeQuestion]}
           onAnswerClick = {this.onAnswerClick}
+          testLength={this.state.test.length}
+          answerNumber={this.state.activeQuestion + 1}
         />
       </div>
      </div>
