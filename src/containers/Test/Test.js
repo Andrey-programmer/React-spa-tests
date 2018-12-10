@@ -5,6 +5,7 @@ import ActiveTest from '../../compionents/ActiveTest/ActiveTest'
 class Test extends Component {
 
   state = { 
+    rightAnswer: null, // { [id] : 'success' 'error' }
     activeQuestion: 0,
     test: [
       {
@@ -57,10 +58,45 @@ class Test extends Component {
   }
 
   onAnswerClick = (answerId) => {
-    console.log('Answer Id: ' + answerId)
-    this.setState({
-      activeQuestion: this.state.activeQuestion + 1
-    })
+    // console.log('Answer Id: ' + answerId)
+    if (this.state.rightAnswer) {
+      const key = Object.keys(this.state.rightAnswer)[0]
+      if (this.state.rightAnswer[key] === 'success') {
+         return
+      }
+    }
+
+    const question = this.state.test[this.state.activeQuestion]
+      // console.log('question' , question)
+    if (question.rightAnswerId === answerId) {
+
+      this.setState({
+        rightAnswer: {[answerId]: 'success'},
+
+      })
+
+      setTimeout(() => {
+          if (this.isTestFinished()) {
+            console.log('Test finished')
+          } else {
+            this.setState({
+              activeQuestion: this.state.activeQuestion + 1,
+              rightAnswer: null
+            })
+          }      
+      }, 1000);
+            
+    } else {
+      this.setState({
+        rightAnswer:{ [answerId]:'error'}
+      })
+    }
+     
+   
+  }
+
+  isTestFinished() {
+    return this.state.test.length === this.state.activeQuestion + 1
   }
 
 
@@ -80,6 +116,7 @@ class Test extends Component {
           onAnswerClick = {this.onAnswerClick}
           testLength={this.state.test.length}
           answerNumber={this.state.activeQuestion + 1}
+          rightAnswer={this.state.rightAnswer}
         />
       </div>
      </div>

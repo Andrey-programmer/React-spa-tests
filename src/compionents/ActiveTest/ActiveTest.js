@@ -19,6 +19,7 @@ const ActiveTest = props => {
         <AnswersList 
                 answers={props.test.answers}
                 onAnswerClick={props.onAnswerClick}
+                rightAnswer={props.rightAnswer}
             />
         </div>
     )
