@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import classes from './Test.css'
 import ActiveTest from '../../compionents/ActiveTest/ActiveTest'
+import FinishedTest from '../../compionents/FinishedTest/FinishedTest'
 
 class Test extends Component {
 
   state = { 
     rightAnswer: null, // { [id] : 'success' 'error' }
     activeQuestion: 0,
+    isFinished: true,
     test: [
       {
         id: 1,
@@ -78,6 +80,9 @@ class Test extends Component {
       setTimeout(() => {
           if (this.isTestFinished()) {
             console.log('Test finished')
+            this.setState({
+              isFinished: true
+            })
           } else {
             this.setState({
               activeQuestion: this.state.activeQuestion + 1,
@@ -111,13 +116,21 @@ class Test extends Component {
       } >
       <div className={classes.TestWrapper}>
       <h1>Ответьте на все вопросы</h1>
-        <ActiveTest 
-          test={this.state.test[this.state.activeQuestion]}
-          onAnswerClick = {this.onAnswerClick}
-          testLength={this.state.test.length}
-          answerNumber={this.state.activeQuestion + 1}
-          rightAnswer={this.state.rightAnswer}
-        />
+
+      {
+        this.state.isFinished 
+          ? <FinishedTest
+
+            />
+          : <ActiveTest 
+            test={this.state.test[this.state.activeQuestion]}
+            onAnswerClick = {this.onAnswerClick}
+            testLength={this.state.test.length}
+            answerNumber={this.state.activeQuestion + 1}
+            rightAnswer={this.state.rightAnswer}
+            />
+      }
+       
       </div>
      </div>
     )
