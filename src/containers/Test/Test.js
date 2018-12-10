@@ -6,9 +6,10 @@ import FinishedTest from '../../compionents/FinishedTest/FinishedTest'
 class Test extends Component {
 
   state = { 
+    results: {}, //{ [id] : 'success' 'error'}
     rightAnswer: null, // { [id] : 'success' 'error' }
     activeQuestion: 0,
-    isFinished: true,
+    isFinished: false,
     test: [
       {
         id: 1,
@@ -64,17 +65,20 @@ class Test extends Component {
     if (this.state.rightAnswer) {
       const key = Object.keys(this.state.rightAnswer)[0]
       if (this.state.rightAnswer[key] === 'success') {
-         return
-      }
+         return 
+      } 
     }
-
+    const results = this.state.results
     const question = this.state.test[this.state.activeQuestion]
       // console.log('question' , question)
     if (question.rightAnswerId === answerId) {
+      if (!results[question.id]) {
+        results[question.id] = 'success'
+      }
 
       this.setState({
         rightAnswer: {[answerId]: 'success'},
-
+        results
       })
 
       setTimeout(() => {
@@ -92,8 +96,11 @@ class Test extends Component {
       }, 1000);
             
     } else {
+      results[question.id] = 'error'
+
       this.setState({
-        rightAnswer:{ [answerId]:'error'}
+        rightAnswer:{ [answerId]:'error'},
+        results
       })
     }
      
@@ -104,6 +111,14 @@ class Test extends Component {
     return this.state.test.length === this.state.activeQuestion + 1
   }
 
+  onRetry = () => {
+    this.setState({
+      activeQuestion: 0,
+      rightAnswer: null,
+      isFinished: false,
+      results: {}
+    })
+  }
 
 
 
@@ -120,7 +135,9 @@ class Test extends Component {
       {
         this.state.isFinished 
           ? <FinishedTest
-
+              results={this.state.results}
+              test={this.state.test}
+              onRetry={this.onRetry}
             />
           : <ActiveTest 
             test={this.state.test[this.state.activeQuestion]}

@@ -3,23 +3,41 @@
   
 
   const FinishedTest = props => {
+
+    const successCount = Object.keys(props.results).reduce((total, key)=> {
+        if  (props.results[key] === 'success') {
+            total++
+        }
+        return total
+    }, 0)
+    
+
       return (
           <div className={classes.FinishedTest}>
             <ul>
-                <li>
-                    <strong>1. </strong>
-                    How are you
-                    <i className={'fas fa-times fa-fw ' + classes.error}></i>
-                </li>
-                <li>
-                    <strong>2. </strong>
-                    How are you
-                    <i className={'fas fa-check fa-fw ' + classes.success}></i>
-                </li>
+                {
+                    props.test.map((testItem, index) => {
+
+                        console.log(props.results[testItem.id])
+                        const classAnswered = [
+                            'fa fw',
+                            props.results[testItem.id] === 'error' ? 'fa-times' : 'fa-check',
+                            classes[props.results[testItem.id]]
+                        ]
+
+                         return (
+                             <li key={index}>
+                                <strong>{index + 1}</strong>.&nbsp;  {testItem.question}
+                                <i className={classAnswered.join(' ')}/>
+                            </li>
+                             
+                         )
+                    })
+                }
             </ul>
-            <p>Вы ответили верно на 4 из 10 вопросов</p>
+            <p>Вы ответили верно на {successCount} из {props.test.length} вопросов</p>
              <div>
-                 <button>Повторить тест!</button>
+                 <button onClick={props.onRetry}>Повторить тест!</button>
              </div>
           </div>
       )
