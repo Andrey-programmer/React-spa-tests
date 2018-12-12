@@ -1,6 +1,7 @@
   import React from 'react'
   import classes from './FinishedTest.css'
   import Button from '../UI/Button/Button'
+  import {Link} from 'react-router-dom'
   
 
   const FinishedTest = props => {
@@ -19,7 +20,7 @@
                 {
                     props.test.map((testItem, index) => {
 
-                        console.log(props.results[testItem.id])
+                        // console.log(props.results[testItem.id])
                         const classAnswered = [
                             'fa fw',
                             props.results[testItem.id] === 'error' ? 'fa-times' : 'fa-check',
@@ -38,8 +39,10 @@
             </ul>
             <p>Вы ответили верно на {successCount} из {props.test.length} вопросов</p>
              <div>
-                 <Button onClick={props.onRetry} type={'primary'}>Повторить тест!</Button>
-                 <Button type={'success'}>Перейти в список тестов</Button>
+                 <Button onClick={props.onRetry} type={'primary'}>Повторить тест!</Button> 
+                 <Link to="/">
+                     <Button type={'success'}>Перейти в список тестов</Button>
+                 </Link>
              </div>
           </div>
       )
