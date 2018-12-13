@@ -7,13 +7,41 @@ import Input from '../../compionents/UI/Input/Input'
 class Auth extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            formControls: {
+                email: {
+                    value: '',
+                    type: 'email',
+                    label: 'Email',
+                    errorMessage: 'Введите корректный email',
+                    valid: false,
+                    touched: false, 
+                    validation: {
+                        required: true,
+                        email: true
+                    }
+                },
+                password: {
+                    value: '',
+                    type: 'password',
+                    label: 'Пароль',
+                    errorMessage: 'Введите корректный пароль',
+                    valid: false,
+                    touched: false,
+                    validation: {
+                        required: true,
+                        minLength: 6
+                    }
+
+                }
+            }
+         }
     }
 
 
     autorization = () => {
 
-    }
+    } 
 
     registration = () => {
 
@@ -23,6 +51,32 @@ class Auth extends Component {
         event.preventDefault();
     }
     
+    onChangeHandler = (event, controlName) => {
+        console.log(`${controlName} :`, event.target.value)
+    }
+
+    renderInputs() {
+        return Object.keys(this.state.formControls).map((controlName, index) => {
+            const control = this.state.formControls[controlName]
+
+            return (
+                <Input
+                    key={controlName + index}
+                    type = {control.type}
+                    value = {control.value}
+                    touched = {control.touched}
+                    valid = {control.valid}
+                    label = {control.label}
+                    errorMessage = {control.errorMessage}
+                    shouldValidate = {!!control.validation}
+                    onChange = {(event) => {
+                        this.onChangeHandler(event, controlName)
+                    }}  
+                />
+            )
+        })
+    }
+
     render() { 
         return ( 
             <div className={classes.Auth}>
@@ -32,13 +86,16 @@ class Auth extends Component {
                         onSubmit={this.submitHandler}
                         className={classes.AuthForm}
                     >
-                        <Input
+                    {
+                        this.renderInputs()
+                    }
+                   {/*      <Input
                              label="Email"
                         />
                         <Input
                              label="Пароль"
                              errorMessage="test"
-                        />
+                        /> */}
                         <Button 
                             type="success" 
                             onClick={this.autorization}
