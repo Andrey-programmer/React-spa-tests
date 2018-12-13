@@ -2,10 +2,12 @@ import React from 'react'
 import classes from './Button.css'
 
 const Button = props => {
+    // console.log('Button', props)
 
     const classButton = [
         classes.Button,
-        classes[props.type]
+        classes[props.type],
+        props.disabled ? classes.error : ''
     ]
 
     return (

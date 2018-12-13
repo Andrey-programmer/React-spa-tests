@@ -13,10 +13,9 @@
     outline: none;
 }
 
-.Button:active {
+.Button:active:not(.error) {
     box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .3);
     /* color: #000; */
-    cursor: not-allowed
 }
 
 .success {
@@ -24,7 +23,8 @@
 }
 
 .error {
-    background-color: rgba(240, 87, 108, .7);
+    /* background-color: rgba(240, 87, 108, .7); */
+    cursor: not-allowed;
 }
 
 .primary {

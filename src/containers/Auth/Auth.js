@@ -15,6 +15,7 @@ class Auth extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+            isFormValid: false,
             formControls: {
                 email: {
                     value: '',
@@ -96,9 +97,19 @@ class Auth extends Component {
         control.valid = this.validateControl(control.value, control.validation)
 
         formControls[controlName] = control
-        this.setState({
-            formControls
+
+
+        let isFormValid = true
+
+        Object.keys(formControls).forEach(name => {
+            isFormValid = formControls[name].valid && isFormValid
         })
+
+        this.setState({ 
+            formControls,
+            isFormValid
+        })
+
     }
 
     renderInputs() {
@@ -144,13 +155,15 @@ class Auth extends Component {
                         /> */}
                         <Button 
                             type="success" 
-                            onClick={this.autorization}
+                            onClick={this.autorization}  
+                            disabled ={!this.state.isFormValid}                   
                         >
                             Войти в систему
                         </Button>
                         <Button 
                             type="primary"
                             onClick={this.registration}
+                            disabled={!this.state.isFormValid}
                         >
                             Зарегистрироваться 
                         </Button>
