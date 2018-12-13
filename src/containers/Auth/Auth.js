@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import classes from './Auth.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
+import is from 'is_js'
+
+
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 
 
 class Auth extends Component {
@@ -51,8 +58,47 @@ class Auth extends Component {
         event.preventDefault();
     }
     
+    validateControl(value, validation) {
+        if (!validation) {
+            return true
+        } else {
+            let isValid = true
+
+            if (validation.required) {
+                isValid = value.trim() !== '' && isValid
+                // console.log('required is ', isValid)
+            } 
+            
+            if (validation.email) {
+                isValid = validateEmail(value) && isValid
+                // console.log('email is ', isValid)
+            }
+            /* Либо подключаем библиотеку и проверяем email так*/
+            if (validation.email) {
+                isValid = is.email(value) && isValid
+                // console.log('email _js ', isValid)
+            } 
+            
+            if (validation.minLength) {
+                isValid = value.length >= validation.minLength && isValid
+            }
+
+            return isValid
+        }
+    }
+
     onChangeHandler = (event, controlName) => {
         console.log(`${controlName} :`, event.target.value)
+        const formControls = { ...this.state.formControls }
+        const control = { ...formControls[controlName] }
+        control.value = event.target.value
+        control.touched = true
+        control.valid = this.validateControl(control.value, control.validation)
+
+        formControls[controlName] = control
+        this.setState({
+            formControls
+        })
     }
 
     renderInputs() {

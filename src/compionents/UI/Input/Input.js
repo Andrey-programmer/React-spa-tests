@@ -17,7 +17,7 @@ const Input = props => {
     if (isInvalid(props)) {
          classesInput.push(classes.invalid)
 
-         console.log(isInvalid(props))
+        //  console.log(isInvalid(props))
     }
 
     return (
