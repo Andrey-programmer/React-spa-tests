@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import classes from './TestCreator.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
+import Select from '../../compionents/UI/Select/Select'
 import {createControl} from '../../MyFrameworkForm/formFramework'
  
 
@@ -38,7 +39,8 @@ class TestCreator extends Component {
         super(props);
         this.state = { 
             test: [],
-            formControls: createNewFormControls()
+            formControls: createNewFormControls(),
+            rightAnswerId: 1
         }
     }
 
@@ -62,7 +64,7 @@ class TestCreator extends Component {
 
         return Object.keys(this.state.formControls).map((controlName, index) => {
             const control = this.state.formControls[controlName]
-            console.log(control)
+            // console.log(control)
             return (
             <React.Fragment key={index}>
                         <Input
@@ -80,7 +82,29 @@ class TestCreator extends Component {
         })
        
     }
+
+
+    selectChange = (event) => {
+        this.setState({
+           rightAnswerId: event.target.value 
+        })
+    }
+
+
     render() { 
+
+        const select =<Select
+            label = "Выберете правильный ответ"
+            value = {this.state.rightAnswerId}
+            onChange = {this.selectChange}
+            options={[
+                {text: 1, value: 1},
+                {text: 2, value: 2},
+                {text: 3, value: 3},
+                {text: 4, value: 4}
+            ]}
+        />
+
         return ( 
             <div className={classes.TestCreator}>
                 <div>
@@ -90,7 +114,7 @@ class TestCreator extends Component {
                     >
                        {this.renderInputs()}
 
-                        <select></select>
+                        {select}
                         <Button
                             type="primary"
                             onClick={this.addQuestion}
