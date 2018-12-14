@@ -49,10 +49,50 @@ class TestCreator extends Component {
 
     addQuestion = (event) => {
         event.preventDefault()
+
+        const test = this.state.test.concat()
+        const index = test.length + 1
+
+        const {question, option1, option2, option3, option4} = this.state.formControls
+
+        const questionItem ={ 
+            question: question.value,
+            id: index,
+            rightAnswerId: this.state.rightAnswerId,
+            answers: [
+                {
+                    text: option1.value,
+                    id: option1.id 
+                },
+                {
+                    text: option2.value,
+                    id: option2.id 
+                },
+                {
+                    text: option3.value,
+                    id: option3.id 
+                },
+                {
+                    text: option4.value,
+                    id: option4.id 
+                }
+            ]
+        }
+
+        test.push(questionItem)
+        // console.log(this.state.formControls)
+
+        this.setState({
+            test,
+            isFormValid: false,
+            formControls: createNewFormControls(),
+            rightAnswerId: 1
+        })
     }
 
-    createTest = () => {
-
+    createTest = (event) => {
+        event.preventDefault()
+        console.log(this.state.test)
     }
  
     onSubmitHandler = (event) => {
