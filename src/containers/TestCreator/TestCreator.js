@@ -3,6 +3,7 @@ import classes from './TestCreator.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import Select from '../../compionents/UI/Select/Select'
+import axios from 'axios'
 import {createControl, validate, validateForm} from '../../MyFrameworkForm/formFramework'
  
 
@@ -45,7 +46,7 @@ class TestCreator extends Component {
         }
 
         // console.log(this.state.isFormValid)
-    }
+    } 
 
     addQuestion = (event) => {
         event.preventDefault()
@@ -92,7 +93,7 @@ class TestCreator extends Component {
 
     createTest = (event) => {
         event.preventDefault()
-        console.log(this.state.test)
+        // console.log(this.state.test)
     }
  
     onSubmitHandler = (event) => {
@@ -145,6 +146,14 @@ class TestCreator extends Component {
     selectChange = (event) => {
         this.setState({
            rightAnswerId: event.target.value 
+        })
+    }
+
+
+    componentDidMount() {
+
+        axios.get('https://react-spa-tests.firebaseio.com/test.json').then(response => {
+            console.log(response)
         })
     }
 
