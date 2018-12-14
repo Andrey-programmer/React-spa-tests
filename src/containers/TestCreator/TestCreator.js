@@ -91,9 +91,28 @@ class TestCreator extends Component {
         })
     }
 
-    createTest = (event) => {
+    createTest = async (event) => {
         event.preventDefault()
-        // console.log(this.state.test)
+
+        try {
+            await axios.post('https://react-spa-tests.firebaseio.com/tests.json', this.state.test)
+            // console.log(response.data)  
+
+            this.setState({
+                test: [],
+                isFormValid: false,
+                formControls: createNewFormControls(),
+                rightAnswerId: 1
+            })
+        } catch (error) {
+            console.log(error)
+        }
+  
+      /*   axios.post('https://react-spa-tests.firebaseio.com/tests.json', this.state.test).then(response => {
+            console.log(response)
+        }).catch(error =>console.log(error)) */
+
+
     }
  
     onSubmitHandler = (event) => {
