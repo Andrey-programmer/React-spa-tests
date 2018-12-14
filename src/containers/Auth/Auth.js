@@ -6,8 +6,8 @@ import is from 'is_js'
 
 
 function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    const validate = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return validate.test(String(email).toLowerCase());
 }
 
 
@@ -89,9 +89,10 @@ class Auth extends Component {
     }
 
     onChangeHandler = (event, controlName) => {
-        console.log(`${controlName} :`, event.target.value)
+        // console.log(`${controlName} :`, event.target.value)
         const formControls = { ...this.state.formControls }
         const control = { ...formControls[controlName] }
+
         control.value = event.target.value
         control.touched = true
         control.valid = this.validateControl(control.value, control.validation)

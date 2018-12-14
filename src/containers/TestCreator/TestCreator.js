@@ -3,7 +3,7 @@ import classes from './TestCreator.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import Select from '../../compionents/UI/Select/Select'
-import {createControl} from '../../MyFrameworkForm/formFramework'
+import {createControl, validate, validateForm} from '../../MyFrameworkForm/formFramework'
  
 
 
@@ -39,13 +39,16 @@ class TestCreator extends Component {
         super(props);
         this.state = { 
             test: [],
+            isFormValid: false,
             formControls: createNewFormControls(),
             rightAnswerId: 1
         }
+
+        // console.log(this.state.isFormValid)
     }
 
-    addQuestion = () => {
-
+    addQuestion = (event) => {
+        event.preventDefault()
     }
 
     createTest = () => {
@@ -57,7 +60,22 @@ class TestCreator extends Component {
     }
 
     changeHandler = (value, controlName) => {
-        
+        const formControls = { ...this.state.formControls }
+        const control = { ...formControls[controlName] }
+
+        control.touched = true
+        control.value = value
+        control.valid = validate(control.value, control.validation)
+
+
+        formControls[controlName] = control
+
+        this.setState({
+            formControls,
+            isFormValid: validateForm(formControls)
+        })
+
+        // console.log(this.state.isFormValid)
     }
 
     renderInputs = () => {
@@ -106,6 +124,7 @@ class TestCreator extends Component {
         />
 
         return ( 
+            
             <div className={classes.TestCreator}>
                 <div>
                     <h1>Создание теста</h1>
@@ -118,12 +137,14 @@ class TestCreator extends Component {
                         <Button
                             type="primary"
                             onClick={this.addQuestion}
+                            disabled={!this.state.isFormValid}
                         >
                             Добавить вопрос
                         </Button>
                         <Button
                             type="success"
                             onClick={this.createTest}
+                            disabled={this.state.test.length === 0}
                         >
                             Создать тест
                         </Button>
