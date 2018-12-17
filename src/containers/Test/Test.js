@@ -27,8 +27,9 @@ class Test extends Component {
     }
     const results = this.state.results
     const question = this.state.test[this.state.activeQuestion]
-      // console.log('question' , question, answerId)
-    if (question.rightAnswerId === toString(answerId)) {
+      console.log('question' , question.rightAnswerId, answerId)
+    if (parseInt(question.rightAnswerId) === answerId) {
+      console.log('Всё верно!')
       if (!results[question.id]) {
         results[question.id] = 'success'
       }
