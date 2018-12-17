@@ -3,6 +3,7 @@ import classes from './Auth.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import is from 'is_js'
+import axios from 'axios'
 
 
 function validateEmail(email) {
@@ -47,11 +48,42 @@ class Auth extends Component {
     }
 
 
-    autorization = () => {
+    autorization = async () => {
+
+        const authData ={ 
+            email: this.state.formControls.email.value,
+            password: this.state.formControls.password.value,
+            returnSecureToken: true
+        }
+
+        try {
+
+            /* const response = */ await axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDZpCwjjFjSbYcji0dgeDvEeEY6iIsLWPY', authData)
+
+            // console.log(response.data)
+
+        } catch (error) {
+            console.log(error)
+        }
 
     } 
 
-    registration = () => {
+    registration = async () => {
+        const authData ={ 
+            email: this.state.formControls.email.value,
+            password: this.state.formControls.password.value,
+            returnSecureToken: true
+        }
+
+        try {
+
+            /* const response = */ await axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDZpCwjjFjSbYcji0dgeDvEeEY6iIsLWPY', authData)
+
+            // console.log(response.data)
+
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
