@@ -3,7 +3,7 @@ import classes from './TestCreator.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import Select from '../../compionents/UI/Select/Select'
-import axios from 'axios'
+import axios from '../../Axios/axios-test'
 import {createControl, validate, validateForm} from '../../MyFrameworkForm/formFramework'
  
 
@@ -95,7 +95,7 @@ class TestCreator extends Component {
         event.preventDefault()
 
         try {
-            await axios.post('https://react-spa-tests.firebaseio.com/tests.json', this.state.test)
+            await axios.post('/tests.json', this.state.test)
             // console.log(response.data)  
 
             this.setState({

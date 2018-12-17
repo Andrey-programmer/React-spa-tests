@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import classes from './Test.css'
 import ActiveTest from '../../compionents/ActiveTest/ActiveTest'
 import FinishedTest from '../../compionents/FinishedTest/FinishedTest'
+import Axios from '../../Axios/axios-test'
+import Loader from '../../compionents/UI/Loader/Loader';
 
 class Test extends Component {
 
@@ -10,58 +12,13 @@ class Test extends Component {
     rightAnswer: null, // { [id] : 'success' 'error' }
     activeQuestion: 0,
     isFinished: false,
-    test: [
-      {
-        id: 1,
-        question: 'Какого цвета небо?',
-        rightAnswerId: 2,
-        answers: [
-          {
-            text: 'Черный',
-            id: 1
-          },
-          {
-            text: 'Синий',
-            id: 2
-          },
-          {
-            text: 'Красный',
-            id: 3
-          },
-          {
-            text: 'Зеленый',
-            id: 4
-          } 
-        ]
-      },
-      {
-        id: 2,
-        question: 'В Каком году основали Санкт-Петербург?',
-        rightAnswerId: 3,
-        answers: [
-          {
-            text: '1700',
-            id: 1
-          },
-          {
-            text: '1705',
-            id: 2
-          },
-          {
-            text: '1703',
-            id: 3
-          },
-          {
-            text: '1803',
-            id: 4
-          } 
-        ]
-      }
-    ]
+    test: [],
+    loading: true
   }
 
   onAnswerClick = (answerId) => {
     // console.log('Answer Id: ' + answerId)
+    console.log(this.state.rightAnswer, answerId)
     if (this.state.rightAnswer) {
       const key = Object.keys(this.state.rightAnswer)[0]
       if (this.state.rightAnswer[key] === 'success') {
@@ -121,6 +78,24 @@ class Test extends Component {
   }
 
 
+  async componentDidMount() {
+
+    try {
+      const response = await Axios.get(`/tests/${this.props.match.params.id}.json`)
+      
+      const test = response.data
+
+      this.setState({
+        test, 
+        loading: false
+      })
+
+    } catch(error) {
+      console.log(error)
+    }
+    
+  }
+
 
   render() {
     // console.log(this.state.test[0])
@@ -131,9 +106,10 @@ class Test extends Component {
       } >
       <div className={classes.TestWrapper}>
       <h1>Ответьте на все вопросы</h1>
-
       {
-        this.state.isFinished 
+        this.state.loading 
+          ? <Loader/> 
+          :  this.state.isFinished 
           ? <FinishedTest
               results={this.state.results}
               test={this.state.test}
@@ -147,7 +123,7 @@ class Test extends Component {
             rightAnswer={this.state.rightAnswer}
             />
       }
-       
+        
       </div>
      </div>
     )

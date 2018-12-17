@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import classes from './TestList.css'
 import {NavLink} from 'react-router-dom'
 import Loader from '../../compionents/UI/Loader/Loader'
-import Axios from 'axios';
+import Axios from '../../Axios/axios-test';
 
 class TestList extends Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class TestList extends Component {
         try {
             const tests = []
 
-            const response = await Axios.get('https://react-spa-tests.firebaseio.com/tests.json')
+            const response = await Axios.get('/tests.json')
 
 
 
