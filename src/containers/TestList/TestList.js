@@ -43,7 +43,7 @@ class TestList extends Component {
                     name: `Тест №${index + 1}`
                 })
             })
-            console.log(response.data)
+            // console.log(response.data)
 
             this.setState({tests, loading: false})
 

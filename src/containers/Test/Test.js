@@ -18,7 +18,7 @@ class Test extends Component {
 
   onAnswerClick = (answerId) => {
     // console.log('Answer Id: ' + answerId)
-    console.log(this.state.rightAnswer, answerId)
+    // console.log(this.state)
     if (this.state.rightAnswer) {
       const key = Object.keys(this.state.rightAnswer)[0]
       if (this.state.rightAnswer[key] === 'success') {
@@ -27,8 +27,8 @@ class Test extends Component {
     }
     const results = this.state.results
     const question = this.state.test[this.state.activeQuestion]
-      // console.log('question' , question)
-    if (question.rightAnswerId === answerId) {
+      // console.log('question' , question, answerId)
+    if (question.rightAnswerId === toString(answerId)) {
       if (!results[question.id]) {
         results[question.id] = 'success'
       }
@@ -87,8 +87,11 @@ class Test extends Component {
 
       this.setState({
         test, 
-        loading: false
+        loading: false,
+        rightAnswer: test.rightAnswer
       })
+
+      // console.log(test) 
 
     } catch(error) {
       console.log(error)
