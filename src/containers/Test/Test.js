@@ -2,19 +2,11 @@ import React, { Component } from 'react'
 import classes from './Test.css'
 import ActiveTest from '../../compionents/ActiveTest/ActiveTest'
 import FinishedTest from '../../compionents/FinishedTest/FinishedTest'
-import Axios from '../../Axios/axios-test'
-import Loader from '../../compionents/UI/Loader/Loader';
+import Loader from '../../compionents/UI/Loader/Loader'
+import {connect} from 'react-redux'
+import { fetchTestById } from '../../store/actions/actTest';
 
 class Test extends Component {
-
-  state = { 
-    results: {}, //{ [id] : 'success' 'error'}
-    rightAnswer: null, // { [id] : 'success' 'error' }
-    activeQuestion: 0,
-    isFinished: false,
-    test: [],
-    loading: true
-  }
 
   onAnswerClick = (answerId) => {
     // console.log('Answer Id: ' + answerId)
@@ -79,30 +71,13 @@ class Test extends Component {
   }
 
 
-  async componentDidMount() {
-
-    try {
-      const response = await Axios.get(`/tests/${this.props.match.params.id}.json`)
-      
-      const test = response.data
-
-      this.setState({
-        test, 
-        loading: false,
-        rightAnswer: test.rightAnswer
-      })
-
-      // console.log(test) 
-
-    } catch(error) {
-      console.log(error)
-    }
-    
+  componentDidMount() {
+    this.props.fetchTestById(this.props.match.params.id)
   }
 
 
   render() {
-    // console.log(this.state.test[0])
+    // console.log(this.state.test[0]) 
     return (
      <div
       className={
@@ -111,20 +86,20 @@ class Test extends Component {
       <div className={classes.TestWrapper}>
       <h1>Ответьте на все вопросы</h1>
       {
-        this.state.loading 
+        this.props.loading || !this.props.test  
           ? <Loader/> 
-          :  this.state.isFinished 
+          :  this.props.isFinished 
           ? <FinishedTest
-              results={this.state.results}
-              test={this.state.test}
+              results={this.props.results}
+              test={this.props.test}
               onRetry={this.onRetry}
             />
           : <ActiveTest 
-            test={this.state.test[this.state.activeQuestion]}
+            test={this.props.test[this.props.activeQuestion]}
             onAnswerClick = {this.onAnswerClick}
-            testLength={this.state.test.length}
-            answerNumber={this.state.activeQuestion + 1}
-            rightAnswer={this.state.rightAnswer}
+            testLength={this.props.test.length}
+            answerNumber={this.props.activeQuestion + 1}
+            rightAnswer={this.props.rightAnswer}
             />
       }
         
@@ -134,5 +109,22 @@ class Test extends Component {
   }
 }
   
-  export default Test;
+function mapStateToProps(state) {
+  return {
+    results: state.test.results, 
+    rightAnswer: state.test.rightAnswer,
+    activeQuestion: state.test.activeQuestion,
+    isFinished: state.test.isFinished,
+    test: state.test.test,
+    loading: state.test.loading
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+     fetchTestById: id => dispatch(fetchTestById(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Test);
   

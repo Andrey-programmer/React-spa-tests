@@ -43,3 +43,31 @@ export function fetchTestsError(error) {
         error
     }
 }
+
+
+export function fetchTestById(testId) {
+    return async dispatch => {
+        dispatch(fetchTestsStart())
+
+        try {
+            const response = await Axios.get(`/tests/${testId}.json`)
+            
+            const test = response.data
+      
+           
+            dispatch(fetchTestSuccess(test))
+            // console.log(test) 
+      
+          } catch(error) {
+            dispatch(fetchTestsError(error))
+          }
+    }
+}
+
+
+export function fetchTestSuccess(test) {
+    return {
+        type: 'FETCH_TEST_SUCCESS',
+        test
+    }
+}

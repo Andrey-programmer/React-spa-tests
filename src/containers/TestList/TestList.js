@@ -31,7 +31,7 @@ class TestList extends Component {
                 <div>
                     <h1>Список тестов</h1>
 
-                    {this.props.loading && this.props.tests.length !== 0
+                    {this.props.loading || !this.props.tests
                         ? <Loader/> 
                         :   <ul>
                                 {this.renderTests()}
@@ -46,7 +46,6 @@ class TestList extends Component {
 }
  
 function mapStateToProps(state) {
-    console.log('state', state)
     return {
         tests: state.test.tests,
         loading: state.test.loading
@@ -54,7 +53,6 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    console.log('dispatch', dispatch)
     return {
         fetchTests: () => dispatch(fetchTests())
     }
