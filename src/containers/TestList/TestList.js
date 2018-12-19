@@ -2,19 +2,13 @@ import React, { Component } from 'react'
 import classes from './TestList.css'
 import {NavLink} from 'react-router-dom'
 import Loader from '../../compionents/UI/Loader/Loader'
-import Axios from '../../Axios/axios-test';
+import {fetchTests} from '../../store/actions/actTest'
+import {connect} from 'react-redux'
 
 class TestList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            tests: [],
-            loading: true
-         }
-    }
 
     renderTests() {
-        return this.state.tests.map((test) => {
+        return this.props.tests.map((test) => {
             return (
                 <li 
                     key={test.id}
@@ -27,30 +21,8 @@ class TestList extends Component {
         })
     }
 
-    async componentDidMount() {
-
-        try {
-            const tests = []
-
-            const response = await Axios.get('/tests.json')
-
-
-
-
-            Object.keys(response.data).forEach((id, index) => {
-                tests.push({
-                    id,
-                    name: `Тест №${index + 1}`
-                })
-            })
-            // console.log(response.data)
-
-            this.setState({tests, loading: false})
-
-        } catch(error) {
-            console.log(error)
-        }
-    
+    componentDidMount() {
+        this.props.fetchTests()
     } 
 
     render() { 
@@ -59,7 +31,7 @@ class TestList extends Component {
                 <div>
                     <h1>Список тестов</h1>
 
-                    {this.state.loading 
+                    {this.props.loading && this.props.tests.length !== 0
                         ? <Loader/> 
                         :   <ul>
                                 {this.renderTests()}
@@ -73,4 +45,19 @@ class TestList extends Component {
     }
 }
  
-export default TestList;
+function mapStateToProps(state) {
+    console.log('state', state)
+    return {
+        tests: state.test.tests,
+        loading: state.test.loading
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    console.log('dispatch', dispatch)
+    return {
+        fetchTests: () => dispatch(fetchTests())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestList);
