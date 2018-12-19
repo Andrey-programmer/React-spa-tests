@@ -28,6 +28,28 @@ export default function testReducer(state = initialState, action) {
             return {
                 ...state, loading: false, test: action.test
             }
+        case 'TEST_SET_STATE': 
+            return {
+                ...state, rightAnswer: action.answerState, results: action.results
+            }
+        case 'FINISH_TEST': {
+            return {
+                ...state, isFinished: true
+            }
+        }
+        case 'TEST_NEXT_QUESTION': 
+            return {
+                ...state, rightAnswer: null, activeQuestion: action.number
+            }
+        case 'TEST_RETRY' : 
+            return {
+                ...state,
+                activeQuestion: 0,
+                rightAnswer: null,
+                isFinished: false,
+                results: {}
+            }
+       
         default: return state
     }
     
