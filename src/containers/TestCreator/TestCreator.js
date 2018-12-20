@@ -3,8 +3,10 @@ import classes from './TestCreator.css'
 import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import Select from '../../compionents/UI/Select/Select'
-import axios from '../../Axios/axios-test'
+// import axios from '../../Axios/axios-test'
 import {createControl, validate, validateForm} from '../../MyFrameworkForm/formFramework'
+import {connect} from 'react-redux'
+import { finishCreateTest, createTestQuestion } from '../../store/actions/actCreateTest';
  
 
 
@@ -39,7 +41,6 @@ class TestCreator extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            test: [],
             isFormValid: false,
             formControls: createNewFormControls(),
             rightAnswerId: 1
@@ -51,14 +52,11 @@ class TestCreator extends Component {
     addQuestion = (event) => {
         event.preventDefault()
 
-        const test = this.state.test.concat()
-        const index = test.length + 1
-
         const {question, option1, option2, option3, option4} = this.state.formControls
 
         const questionItem ={ 
             question: question.value,
-            id: index,
+            id: this.props.test.length + 1,
             rightAnswerId: this.state.rightAnswerId,
             answers: [
                 {
@@ -80,39 +78,32 @@ class TestCreator extends Component {
             ]
         }
 
-        test.push(questionItem)
-        // console.log(this.state.formControls)
+        this.props.createTestQuestion(questionItem)
 
         this.setState({
-            test,
             isFormValid: false,
             formControls: createNewFormControls(),
             rightAnswerId: 1
         })
     }
 
-    createTest = async (event) => {
+    createTest = event => {
         event.preventDefault()
-
-        try {
-            await axios.post('/tests.json', this.state.test)
-            // console.log(response.data)  
-
-            this.setState({
-                test: [],
-                isFormValid: false,
-                formControls: createNewFormControls(),
-                rightAnswerId: 1
-            })
-        } catch (error) {
-            console.log(error)
-        }
+        console.log('create from render')
+        // console.log(response.data)  
+        
+        
+        this.setState({
+            isFormValid: false,
+            formControls: createNewFormControls(),
+            rightAnswerId: 1
+        })
+        this.props.finishCreateTest()
+        
   
       /*   axios.post('https://react-spa-tests.firebaseio.com/tests.json', this.state.test).then(response => {
             console.log(response)
         }).catch(error =>console.log(error)) */
-
-
     }
  
     onSubmitHandler = (event) => {
@@ -171,9 +162,9 @@ class TestCreator extends Component {
 
     componentDidMount() {
 
-        axios.get('https://react-spa-tests.firebaseio.com/test.json').then(response => {
+    /*     axios.get('https://react-spa-tests.firebaseio.com/test.json').then(response => {
             console.log(response)
-        })
+        }) */
     }
 
 
@@ -212,7 +203,7 @@ class TestCreator extends Component {
                         <Button
                             type="success"
                             onClick={this.createTest}
-                            disabled={this.state.test.length === 0}
+                            disabled={this.props.test.length === 0}
                         >
                             Создать тест
                         </Button>
@@ -224,4 +215,18 @@ class TestCreator extends Component {
     }
 }
  
-export default TestCreator;
+function mapStateToProps(state) {
+    return {
+        test: state.create.test
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        createTestQuestion: item => dispatch(createTestQuestion(item)),
+        finishCreateTest: () => dispatch(finishCreateTest)
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestCreator);
