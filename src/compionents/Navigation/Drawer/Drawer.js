@@ -3,11 +3,6 @@ import classes from './Drawer.css'
 import {NavLink} from 'react-router-dom'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 
-const links = [
-    {to: '/', label: 'Список', exact: true},
-    {to: '/auth', label: 'Авторизация', exact: false},
-    {to: '/test-creator', label: 'Создать тест', exact: false},
-]
 
 class Drawer extends Component {
     constructor(props) {
@@ -19,7 +14,7 @@ class Drawer extends Component {
         this.props.onClose()
     }
 
-    renderLinks() {
+    renderLinks(links) {
         return links.map((link, index) => {
             return (
                 <li 
@@ -50,6 +45,17 @@ class Drawer extends Component {
             classDrawer.push(classes.close)
         }
 
+        const links = [
+            {to: '/', label: 'Список', exact: true},
+        ]
+
+        if (this.props.isAuthenticated) {
+            links.push({to: '/test-creator', label: 'Создать тест', exact: false})
+            links.push({to: '/logout', label: 'Выйти', exact: false})
+        } else {
+            links.push({to: '/auth', label: 'Авторизация', exact: false})
+        }
+
         return ( 
             <React.Fragment>
                 {
@@ -63,7 +69,7 @@ class Drawer extends Component {
                 <nav className={classDrawer.join(' ')}>
                     <ul>
                         {
-                            this.renderLinks()
+                            this.renderLinks(links)
                         }
                     </ul>
                 </nav>
