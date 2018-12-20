@@ -10,13 +10,14 @@ export function createTestQuestion(item) {
 }
 
 export function resetTestCreation() {
+    console.log('resetTestCreation')
     return {
       type: RESET_TEST_CREATION
     }
 }
 
 export function finishCreateTest() {
-    console.log('finishCreateTest from action')  
+    console.log('finishCreateTest from action')
     return async (dispatch, getState) => {
         // console.log('dispatch',dispatch)
         await axios.post('/tests.json',  getState().create.test)
