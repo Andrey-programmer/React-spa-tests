@@ -224,7 +224,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         createTestQuestion: item => dispatch(createTestQuestion(item)),
-        finishCreateTest: () => dispatch(finishCreateTest)
+        finishCreateTest: () => dispatch(finishCreateTest())
     }
 }
 
