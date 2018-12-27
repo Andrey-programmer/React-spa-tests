@@ -4,7 +4,8 @@ import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import is from 'is_js'
 import { connect } from 'react-redux'
-import { auth } from '../../store/actions/actAuth';
+import { auth, error_message } from '../../store/actions/actAuth'
+import Error_message from '../../compionents/UI/Error_message/Error_message'
 
 
 function validateEmail(email) {
@@ -150,6 +151,7 @@ class Auth extends Component {
     }
 
     render() { 
+
         return ( 
             <div className={classes.Auth}>
                 <div>
@@ -183,6 +185,9 @@ class Auth extends Component {
                             Зарегистрироваться 
                         </Button>
                     </form>
+                    <Error_message>
+                       {this.props.error_message}
+                    </Error_message>
                 </div>
             </div> 
         )
@@ -193,9 +198,10 @@ class Auth extends Component {
  
 function mapDispatchToProps(dispatch) {
     return {
-       auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
+       auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin)),
+       error_message: () => dispatch(error_message())
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(null, mapDispatchToProps)(Auth)

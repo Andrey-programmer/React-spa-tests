@@ -155,3 +155,4 @@ export function testAnswerClick(answerId) {
 function isTestFinished(state) {
     return state.activeQuestion + 1 === state.test.length   
 }
+

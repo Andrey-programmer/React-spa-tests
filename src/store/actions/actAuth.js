@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AUTH_SUCCESS, AUTH_LOGOUT } from './actionTypes';
+import { AUTH_SUCCESS, AUTH_LOGOUT, ERROR_MESSAGE } from './actionTypes';
 
 export function auth(email, password, isLogin) {
     return async dispatch => {
@@ -77,4 +77,12 @@ export function autoLogin() {
             }
         }
     }
+}
+
+
+export function error_message() {
+   return {
+       type: ERROR_MESSAGE,
+       message: 'Some_String'
+   }
 }
