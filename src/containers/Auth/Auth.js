@@ -151,7 +151,7 @@ class Auth extends Component {
     }
 
     render() { 
-
+        
         return ( 
             <div className={classes.Auth}>
                 <div>
@@ -186,7 +186,7 @@ class Auth extends Component {
                         </Button>
                     </form>
                     <Error_message>
-                       {this.props.error_message}
+                       {this.props.error_message().message}
                     </Error_message>
                 </div>
             </div> 
