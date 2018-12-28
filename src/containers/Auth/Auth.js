@@ -193,11 +193,10 @@ class Auth extends Component {
                         >
                             Зарегистрироваться
                         </Button>
+                        {this.props.async_call?<Error_message>
+                            {this.props.error_message(this.state.type_submit).message}e
+                        </Error_message>: null}
                     </form>
-                    
-                    {this.props.async_call?<Error_message>
-                       {this.props.error_message(this.state.type_submit).message}
-                    </Error_message>: null}
                     
                 </div>
             </div> 
