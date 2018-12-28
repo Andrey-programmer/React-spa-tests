@@ -24,7 +24,7 @@ export function fetchTests() {
                     name: `Тест №${index + 1}`
                 })
             })
-            console.log('Data from actTest', response.data)
+            // console.log('Data from actTest', response.data)
 
             dispatch(fetchTestsSuccess(tests))
         } catch(error) {

@@ -13,3 +13,5 @@ export const RESET_TEST_CREATION = 'RESET_TEST_CREATION'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 export const ERROR_MESSAGE = 'ERROR_MESSAGE'
+
+export const ASYNC_CALL = 'ASYNC_CALL'

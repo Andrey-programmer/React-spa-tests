@@ -17,7 +17,8 @@ function validateEmail(email) {
 class Auth extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
+            type_submit: null,
             isFormValid: false,
             formControls: {
                 email: {
@@ -57,6 +58,11 @@ class Auth extends Component {
             this.state.formControls.password.value,
             true
         )
+        
+        this.setState({
+            type_submit: 'autorization'
+        })
+
     } 
 
     registration = () => {
@@ -67,6 +73,9 @@ class Auth extends Component {
             false
         )
 
+        this.setState({
+            type_submit: 'registration'
+        })
         
     }
 
@@ -151,7 +160,7 @@ class Auth extends Component {
     }
 
     render() { 
-        
+       
         return ( 
             <div className={classes.Auth}>
                 <div>
@@ -182,26 +191,33 @@ class Auth extends Component {
                             onClick={this.registration}
                             disabled={!this.state.isFormValid}
                         >
-                            Зарегистрироваться 
+                            Зарегистрироваться
                         </Button>
                     </form>
-                    <Error_message>
-                       {this.props.error_message().message}
-                    </Error_message>
+                    
+                    {this.props.async_call?<Error_message>
+                       {this.props.error_message(this.state.type_submit).message}
+                    </Error_message>: null}
+                    
                 </div>
             </div> 
         )
     }
 }
  
-
+function mapsStateToProps(state) {
+    // console.log('asyn_call', state.auth.async_call)
+    return {
+        async_call: state.auth.async_call
+    }
+}
  
 function mapDispatchToProps(dispatch) {
     return {
        auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin)),
-       error_message: () => dispatch(error_message())
+      error_message: (type_submit) => dispatch(error_message(type_submit))
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapsStateToProps, mapDispatchToProps)(Auth)

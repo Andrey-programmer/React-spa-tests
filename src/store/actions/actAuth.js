@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AUTH_SUCCESS, AUTH_LOGOUT, ERROR_MESSAGE } from './actionTypes';
+import { AUTH_SUCCESS, AUTH_LOGOUT, ERROR_MESSAGE, ASYNC_CALL } from './actionTypes';
 
 export function auth(email, password, isLogin) {
     return async dispatch => {
@@ -28,18 +28,27 @@ export function auth(email, password, isLogin) {
             dispatch(authSuccess(data.idToken))
             dispatch(autoLogout(data.expiresIn))
         } catch(error) {
-            console.log('error', JSON.stringify(error))
-            console.log('error', error.response.data.error.code)
+            // console.log('error', JSON.stringify(error))
+            // console.log('error', error.response.data.error.code)
+            dispatch(async_call(true))
+
             throw error
         }
-       
     }
 }
 
 export function authSuccess(token) {
+
     return {
         type: AUTH_SUCCESS,
-        token
+        token    
+    }
+}
+
+export function async_call(async_call) {
+    return {
+        type: ASYNC_CALL,
+        async_call
     }
 }
 
@@ -80,9 +89,23 @@ export function autoLogin() {
 }
 
 
-export function error_message() {
-   return {
-       type: ERROR_MESSAGE,
-       message: 'Some_String'
-   }
+export function error_message(type_submit = '') {
+
+    if (type_submit === 'autorization') {
+        return {
+            type: ERROR_MESSAGE,
+            message: 'Неверная пара логин/пароль'
+        }
+    } else if (type_submit === 'registration') {
+        return {
+            type: ERROR_MESSAGE,
+            message: 'Такой пользователь уже существует'
+        }
+    } else {
+        return  {
+            type: ERROR_MESSAGE,
+            message: ''
+        }
+    }
+ 
 }
