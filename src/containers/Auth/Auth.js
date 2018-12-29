@@ -5,7 +5,7 @@ import Input from '../../compionents/UI/Input/Input'
 import is from 'is_js'
 import { connect } from 'react-redux'
 import { auth, error_message } from '../../store/actions/actAuth'
-import Error_message from '../../compionents/UI/Error_message/Error_message'
+import ErrorMessage from '../../compionents/UI/Error_message/Error_message'
 
 
 function validateEmail(email) {
@@ -193,9 +193,9 @@ class Auth extends Component {
                         >
                             Зарегистрироваться
                         </Button>
-                        {this.props.async_call?<Error_message>
+                        {this.props.async_call?<ErrorMessage>
                             {this.props.error_message(this.state.type_submit).message}
-                        </Error_message>: null}
+                        </ErrorMessage>: null} 
                     </form>
                     
                 </div>
