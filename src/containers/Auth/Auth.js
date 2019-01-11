@@ -4,7 +4,7 @@ import Button from '../../compionents/UI/Button/Button'
 import Input from '../../compionents/UI/Input/Input'
 import is from 'is_js'
 import { connect } from 'react-redux'
-import { auth, error_message } from '../../store/actions/actAuth'
+import { auth } from '../../store/actions/actAuth'
 import ErrorMessage from '../../compionents/UI/Error_message/Error_message'
 
 
@@ -20,6 +20,7 @@ class Auth extends Component {
         this.state = {
             type_submit: null,
             isFormValid: false,
+            error_Mess: '',
             formControls: {
                 email: {
                     value: '',
@@ -60,9 +61,14 @@ class Auth extends Component {
         )
         
         this.setState({
-            type_submit: 'autorization'
+            type_submit: 'autorization',
+            error_Mess: 'Неверная пара логин/пароль'        
         })
 
+        this.setState({
+            // error_Mess: this.props.error_message(this.state.type_submit).message
+        })
+         
     } 
 
     registration = () => {
@@ -74,15 +80,15 @@ class Auth extends Component {
         )
 
         this.setState({
-            type_submit: 'registration'
+            type_submit: 'registration',
+            error_Mess:  'Такой пользователь уже существует'
         })
-        
+
     }
 
     submitHandler = (event) => {
         event.preventDefault();
     }
-    
     validateControl(value, validation) {
         if (!validation) {
             return true
@@ -194,7 +200,7 @@ class Auth extends Component {
                             Зарегистрироваться
                         </Button>
                         {this.props.async_call?<ErrorMessage>
-                            {this.props.error_message(this.state.type_submit).message}
+                            {this.state.error_Mess}
                         </ErrorMessage>: null} 
                     </form>
                     
@@ -213,8 +219,7 @@ function mapsStateToProps(state) {
  
 function mapDispatchToProps(dispatch) {
     return {
-       auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin)),
-      error_message: (type_submit) => dispatch(error_message(type_submit))
+       auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
     }
 }
 

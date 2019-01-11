@@ -1,4 +1,4 @@
-import { AUTH_SUCCESS, AUTH_LOGOUT, ERROR_MESSAGE, ASYNC_CALL } from "../actions/actionTypes";
+import { AUTH_SUCCESS, AUTH_LOGOUT, ASYNC_CALL } from "../actions/actionTypes";
 
 const initialState = {
     token: null,
@@ -14,10 +14,6 @@ export default function authReducer(state = initialState, action) {
         case AUTH_LOGOUT: 
             return {
                 ...state, token: null, async_call: false
-            }
-        case ERROR_MESSAGE:
-            return {
-                ...state
             }
         case ASYNC_CALL: 
             return {

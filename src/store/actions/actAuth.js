@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AUTH_SUCCESS, AUTH_LOGOUT, ERROR_MESSAGE, ASYNC_CALL } from './actionTypes';
+import { AUTH_SUCCESS, AUTH_LOGOUT, ASYNC_CALL } from './actionTypes';
 
 export function auth(email, password, isLogin) {
     return async dispatch => {
@@ -86,26 +86,4 @@ export function autoLogin() {
             }
         }
     }
-}
-
-
-export function error_message(type_submit = '') {
-
-    if (type_submit === 'autorization') {
-        return {
-            type: ERROR_MESSAGE,
-            message: 'Неверная пара логин/пароль'
-        }
-    } else if (type_submit === 'registration') {
-        return {
-            type: ERROR_MESSAGE,
-            message: 'Такой пользователь уже существует'
-        }
-    } else {
-        return  {
-            type: ERROR_MESSAGE,
-            message: ''
-        }
-    }
- 
 }
