@@ -30,7 +30,7 @@ export function auth(email, password, isLogin) {
         } catch(error) {
             // console.log('error', JSON.stringify(error))
             // console.log('error', error.response.data.error.code)
-            dispatch(async_call(true))
+            dispatch(async_call(!!error))
 
             throw error
         }
