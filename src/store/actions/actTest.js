@@ -124,7 +124,7 @@ export function testAnswerClick(answerId) {
           const question = state.test[state.activeQuestion]
             console.log('question' , question.rightAnswerId, answerId)
           if (parseInt(question.rightAnswerId) === answerId) {
-            console.log('Всё верно!')
+            // console.log('Всё верно!')
             if (!results[question.id]) {
               results[question.id] = 'success'
             }
@@ -133,10 +133,10 @@ export function testAnswerClick(answerId) {
       
             setTimeout(() => {
                 if (isTestFinished(state)) {
-                  console.log('Test finished')
+                //   console.log('Test finished')
 
                   dispatch(finishTest())
-                  console.log('==========')
+                //   console.log('==========')
                 } else {
 
                     dispatch(testNextQuestion(state.activeQuestion + 1))

@@ -10,11 +10,11 @@ const ActiveTest = props => {
             className={classes.ActiveTest}
         >
             <p className={classes.Question}>
-                <span>
+                <span  className={classes.question}>
                     <strong>{props.answerNumber}. </strong>
                     {props.test.question}
                 </span>
-                <small>{props.answerNumber} из {props.testLength}</small>
+                <small className={classes.Small}>{props.answerNumber} из {props.testLength}</small>
             </p>
         <AnswersList 
                 answers={props.test.answers}

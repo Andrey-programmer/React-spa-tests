@@ -99,7 +99,9 @@ class TestCreator extends Component {
             rightAnswerId: 1
         })
         this.props.finishCreateTest()
-        
+        // console.log(this.props)
+
+        this.props.history.push('/') //Программный переход в корень 
   
       /*   axios.post('https://react-spa-tests.firebaseio.com/tests.json', this.state.test).then(response => {
             console.log(response)
@@ -169,6 +171,7 @@ class TestCreator extends Component {
 
 
     render() { 
+        // console.log(this.props)
 
         const select =<Select
             label = "Выберете правильный ответ"
@@ -207,7 +210,6 @@ class TestCreator extends Component {
                         >
                             Создать тест
                         </Button>
-                    
                     </form>
                 </div>
             </div>

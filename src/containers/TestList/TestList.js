@@ -29,7 +29,7 @@ class TestList extends Component {
         return ( 
             <div className={classes.TestList}>
                 <div>
-                    <h1>Список тестов</h1>
+                    <h1>Тесты по HTML</h1>
 
                     {this.props.loading || !this.props.tests
                         ? <Loader/> 

@@ -1,5 +1,5 @@
 .ActiveTest {
-    padding: 20px;
+    padding: 5px 20px 20px 20px;
     color: white;
     border: 2px solid #fff;
     background-repeat: 5px;
@@ -11,4 +11,12 @@
 .Question {
     display: flex;
     justify-content: space-between;
+}
+
+.Question .question {
+    padding-top: 15px;
+}
+
+.Small {
+    min-width: 50px
 }
