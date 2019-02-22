@@ -185,20 +185,23 @@ class Auth extends Component {
                              label="Пароль"
                              errorMessage="test"
                         /> */}
-                        <Button 
-                            type="success" 
-                            onClick={this.autorization}  
-                            disabled ={!this.state.isFormValid}                   
-                        >
-                            Войти в систему
-                        </Button>
-                        <Button 
-                            type="primary"
-                            onClick={this.registration}
-                            disabled={!this.state.isFormValid}
-                        >
-                            Зарегистрироваться
-                        </Button>
+                        <div>
+                            <Button 
+                                type="success" 
+                                onClick={this.autorization}  
+                                disabled ={!this.state.isFormValid}                   
+                            >
+                                Войти в систему
+                            </Button>
+                            <Button 
+                                type="primary"
+                                onClick={this.registration}
+                                disabled={!this.state.isFormValid}
+                            >
+                                Зарегистрироваться
+                            </Button>
+                        </div>
+                        
                         {this.props.async_call?<ErrorMessage>
                             {this.state.error_Mess}
                         </ErrorMessage>: null} 

@@ -9,9 +9,19 @@
 
 .Auth > div {
     width: 100px;
-    min-width: 600px;
-    padding: 0 20px;
+    min-width: 350px;
+    padding: 0;
 }
+
+.Auth button {
+    padding: 10px;
+    margin-right: 14px;
+}
+
+.Auth button:last-child {
+    margin-right: 0;
+}
+
 
 .Auth h1 {
     color: #fff;
